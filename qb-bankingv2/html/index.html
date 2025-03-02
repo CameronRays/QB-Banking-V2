@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QB Banking V2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="container">
+            <div id="banking-container">
+                <div class="header">
+                    <div class="logo">
+                        <i class="fas fa-landmark"></i>
+                        <h1>QB Banking V2</h1>
+                    </div>
+                    <div class="close-btn" id="close-app">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <div class="sidebar">
+                        <div class="user-info">
+                            <div class="avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <h3 id="player-name">Loading...</h3>
+                                <p id="player-citizenid">Loading...</p>
+                            </div>
+                        </div>
+                        <div class="nav-menu">
+                            <div class="nav-item active" data-tab="accounts">
+                                <i class="fas fa-wallet"></i>
+                                <span>Accounts</span>
+                            </div>
+                            <div class="nav-item" data-tab="transfer">
+                                <i class="fas fa-exchange-alt"></i>
+                                <span>Transfer</span>
+                            </div>
+                            <div class="nav-item" data-tab="statements">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                <span>Statements</span>
+                            </div>
+                            <div class="nav-item" data-tab="settings">
+                                <i class="fas fa-cog"></i>
+                                <span>Settings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main-content">
+                        <div class="tab-content active" id="accounts-tab">
+                            <h2>Your Accounts</h2>
+                            <div class="accounts-list" id="accounts-list">
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="transfer-tab">
+                            <h2>Transfer Money</h2>
+                            <div class="transfer-container">
+                                <div class="transfer-section">
+                                    <h3>Internal Transfer</h3>
+                                    <div class="form-group">
+                                        <label>From Account</label>
+                                        <select id="internal-from-account"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>To Account</label>
+                                        <select id="internal-to-account"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Amount</label>
+                                        <input type="number" id="internal-amount" placeholder="0">
+                                    </div>
+                                    <button class="submit-btn" id="internal-transfer-btn">Transfer</button>
+                                </div>
+                                <div class="transfer-section">
+                                    <h3>External Transfer</h3>
+                                    <div class="form-group">
+                                        <label>From Account</label>
+                                        <select id="external-from-account"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>To Citizen ID</label>
+                                        <input type="text" id="external-to-citizenid" placeholder="Enter Citizen ID">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Amount</label>
+                                        <input type="number" id="external-amount" placeholder="0">
+                                    </div>
+                                    <button class="submit-btn" id="external-transfer-btn">Transfer</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="statements-tab">
+                            <h2>Account Statements</h2>
+                            <div class="statements-container">
+                                <div class="form-group">
+                                    <label>Select Account</label>
+                                    <select id="statement-account"></select>
+                                </div>
+                                <div class="statements-list" id="statements-list">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="settings-tab">
+                            <h2>Settings</h2>
+                            <div class="settings-container">
+                                <div class="setting-section">
+                                    <h3>Create New Account</h3>
+                                    <div class="form-group">
+                                        <label>Account Name</label>
+                                        <input type="text" id="new-account-name" placeholder="Enter account name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Initial Deposit</label>
+                                        <input type="number" id="new-account-deposit" placeholder="0">
+                                    </div>
+                                    <button class="submit-btn" id="create-account-btn">Create Account</button>
+                                </div>
+                                <div class="setting-section">
+                                    <h3>Manage Shared Accounts</h3>
+                                    <div class="form-group">
+                                        <label>Select Account</label>
+                                        <select id="manage-account"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Add User (Citizen ID)</label>
+                                        <input type="text" id="add-user-citizenid" placeholder="Enter Citizen ID">
+                                    </div>
+                                    <button class="submit-btn" id="add-user-btn">Add User</button>
+                                </div>
+                            </div>
+                
+                            <div class="settings-container">
+                                <div class="setting-section">
+                                    <h3>Set or Update ATM PIN</h3>
+                                    <p class="pin-info">First, set a PIN for all your bank cards to use at ATMs</p>
+                                    <div class="form-group">
+                                        <label>New PIN (4 digits)</label>
+                                        <input type="password" id="setup-pin" maxlength="4" placeholder="Enter new PIN">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirm PIN</label>
+                                        <input type="password" id="confirm-pin" maxlength="4" placeholder="Confirm new PIN">
+                                    </div>
+                                    <button class="submit-btn" id="setup-pin-btn">Set PIN</button>
+                                </div>
+                                
+                                <div class="setting-section">
+                                    <h3>Order New Card</h3>
+                                    <p class="pin-info">After setting a PIN above, you can order a new card using that PIN</p>
+                                    <div class="form-group">
+                                        <label>Account</label>
+                                        <select id="card-account"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>PIN (4 digits)</label>
+                                        <input type="password" id="card-pin" maxlength="4" placeholder="Enter PIN you set above">
+                                    </div>
+                                    <button class="submit-btn" id="order-card-btn">Order Card</button>
+                            </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <div id="atm-container" style="display: none;">
+                <div class="header">
+                    <div class="logo">
+                        <i class="fas fa-university"></i>
+                        <h1>DRP ATM</h1>
+                    </div>
+                    <div class="close-btn" id="close-atm">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="atm-content">
+                    <div class="atm-pin-section" id="atm-pin-section">
+                        <h2>Enter PIN</h2>
+                        <p class="atm-instruction">Please enter your 4-digit PIN to access the ATM</p>
+                        <div class="pin-display">
+                            <span id="pin-dots">{{ atmPinDisplay }}</span>
+                        </div>
+                        <div class="pin-keypad">
+                            <button class="pin-key" data-key="1">1</button>
+                            <button class="pin-key" data-key="2">2</button>
+                            <button class="pin-key" data-key="3">3</button>
+                            <button class="pin-key" data-key="4">4</button>
+                            <button class="pin-key" data-key="5">5</button>
+                            <button class="pin-key" data-key="6">6</button>
+                            <button class="pin-key" data-key="7">7</button>
+                            <button class="pin-key" data-key="8">8</button>
+                            <button class="pin-key" data-key="9">9</button>
+                            <button class="pin-key pin-key-action" data-key="clear">Clear</button>
+                            <button class="pin-key" data-key="0">0</button>
+                            <button class="pin-key pin-key-action" data-key="enter">Enter</button>
+                        </div>
+                        <p class="atm-note">If you haven't set a PIN, please visit a bank branch and go to Settings > Set or Update ATM PIN first, then order a new card with that PIN.</p>
+                    </div>
+
+                    <div class="atm-main-section" id="atm-main-section" style="display: none;">
+                        <h2>Select Account</h2>
+                        <div class="atm-accounts" id="atm-accounts">
+                        </div>
+                        <div class="atm-selected-account" id="atm-selected-account">
+                            <h3>Selected Account</h3>
+                            <div class="atm-account-details">
+                                <p>Name: <span id="atm-account-name">None selected</span></p>
+                                <p>Balance: <span id="atm-account-balance">$0.00</span></p>
+                            </div>
+                        </div>
+                        <div class="atm-actions">
+                            <div class="atm-action-section">
+                                <h3>Withdraw</h3>
+                                <div class="form-group">
+                                    <label>Amount</label>
+                                    <input type="number" id="atm-withdraw-amount" placeholder="0" v-model="atmWithdrawAmount">
+                                </div>
+                                <button class="submit-btn" id="atm-withdraw-btn">Withdraw</button>
+                            </div>
+                            <div class="atm-action-section">
+                                <h3>Deposit</h3>
+                                <div class="form-group">
+                                    <label>Amount</label>
+                                    <input type="number" id="atm-deposit-amount" placeholder="0" v-model="atmDepositAmount">
+                                </div>
+                                <button class="submit-btn" id="atm-deposit-btn">Deposit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-container" class="modal-container">
+                <div class="modal" id="deposit-modal">
+                    <div class="modal-header">
+                        <h3>Deposit Money</h3>
+                        <div class="modal-close"><i class="fas fa-times"></i></div>
+                    </div>
+                    <div class="modal-content">
+                        <div class="form-group">
+                            <label>Select Account</label>
+                            <select id="deposit-account" v-model="depositAccount">
+                                <option v-for="account in accounts" :value="account.account_name">
+                                    {{ account.account_name }} - ${{ formatMoney(account.account_balance) }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="number" id="deposit-amount" placeholder="0" v-model="depositAmount">
+                        </div>
+                        <button class="submit-btn" id="confirm-deposit-btn" @click="handleDeposit">
+                            <i class="fas fa-arrow-down"></i> Deposit
+                        </button>
+                    </div>
+                </div>
+                <div class="modal" id="withdraw-modal">
+                    <div class="modal-header">
+                        <h3>Withdraw Money</h3>
+                        <div class="modal-close"><i class="fas fa-times"></i></div>
+                    </div>
+                    <div class="modal-content">
+                        <div class="form-group">
+                            <label>Select Account</label>
+                            <select id="withdraw-account" v-model="withdrawAccount">
+                                <option v-for="account in accounts" :value="account.account_name">
+                                    {{ account.account_name }} - ${{ formatMoney(account.account_balance) }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="number" id="withdraw-amount" placeholder="0" v-model="withdrawAmount">
+                        </div>
+                        <button class="submit-btn" id="confirm-withdraw-btn" @click="handleWithdraw">
+                            <i class="fas fa-arrow-up"></i> Withdraw
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="notification-container">
+                <div v-for="notification in notifications" :key="notification.id" :class="['notification', notification.type]">
+                    {{ notification.message }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
