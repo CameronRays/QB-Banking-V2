@@ -4,3 +4,7 @@
 - Shared accounts between players
 - Auto creation of job/gang accounts on bank first open
 - Boss-only access to job/gang accounts
+
+Original Creator
+
+https://github.com/qbcore-framework/qb-banking
